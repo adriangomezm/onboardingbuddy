@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalkLearn - Product Requirements Document</title>
+    <style>
+        :root {
+            --tp-green: #00E676;
+            --tp-green-dark: #00C853;
+            --tp-green-light: #E8F5E9;
+            --tp-navy: #2C3E50;
+            --tp-navy-light: #34495E;
+            --tp-bg: #F5F7FA;
+            --tp-white: #FFFFFF;
+            --tp-gray: #6C757D;
+            --tp-gray-light: #ADB5BD;
+            --tp-gray-border: #DEE2E6;
+            --tp-blue: #2196F3;
+            --tp-blue-light: #E3F2FD;
+            --tp-orange: #FF9800;
+            --tp-orange-light: #FFF3E0;
+            --tp-red: #F44336;
+            --tp-red-light: #FFEBEE;
+            --tp-purple: #9C27B0;
+            --tp-purple-light: #F3E5F5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--tp-bg);
+            color: var(--tp-navy);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--tp-navy) 0%, var(--tp-navy-light) 100%);
+            color: white;
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(0, 230, 118, 0.08);
+        }
+        .header-badge {
+            display: inline-block;
+            background: var(--tp-green);
+            color: var(--tp-navy);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        .header h1 span { color: var(--tp-green); }
+        .header .subtitle {
+            font-size: 20px;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+        .header-meta {
+            display: flex;
+            gap: 32px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        .header-meta strong { color: rgba(255,255,255,0.9); }
+
+        /* Navigation */
+        .nav {
+            background: var(--tp-white);
+            border-bottom: 1px solid var(--tp-gray-border);
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .nav-inner {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .nav a {
+            text-decoration: none;
+            color: var(--tp-gray);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 14px 16px;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav a:hover {
+            color: var(--tp-navy);
+            border-bottom-color: var(--tp-green);
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Section */
+        .section {
+            background: var(--tp-white);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            border: 1px solid var(--tp-gray-border);
+        }
+        .section-number {
+            display: inline-block;
+            background: var(--tp-green);
+            color: var(--tp-navy);
+            font-size: 12px;
+            font-weight: 700;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        .section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--tp-green-light);
+        }
+        .section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 28px 0 16px;
+            color: var(--tp-navy);
+        }
+        .section h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 20px 0 12px;
+            color: var(--tp-navy-light);
+        }
+        .section p {
+            margin-bottom: 16px;
+            color: #444;
+            font-size: 15px;
+        }
+
+        /* Vision Box */
+        .vision-box {
+            background: linear-gradient(135deg, var(--tp-navy) 0%, var(--tp-navy-light) 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .vision-box::before {
+            content: '\201C';
+            font-size: 120px;
+            position: absolute;
+            top: -20px;
+            left: 16px;
+            color: rgba(0, 230, 118, 0.15);
+            font-family: Georgia, serif;
+        }
+        .vision-box p {
+            color: rgba(255,255,255,0.95);
+            font-size: 18px;
+            font-style: italic;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 14px;
+        }
+        thead th {
+            background: var(--tp-navy);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        thead th:first-child { border-radius: 8px 0 0 0; }
+        thead th:last-child { border-radius: 0 8px 0 0; }
+        tbody td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--tp-gray-border);
+            vertical-align: top;
+        }
+        tbody tr:hover { background: #f8fffe; }
+        tbody tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+        tbody tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-green { background: var(--tp-green-light); color: #1B5E20; }
+        .badge-orange { background: var(--tp-orange-light); color: #E65100; }
+        .badge-red { background: var(--tp-red-light); color: #B71C1C; }
+        .badge-blue { background: var(--tp-blue-light); color: #0D47A1; }
+        .badge-purple { background: var(--tp-purple-light); color: #4A148C; }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            background: var(--tp-white);
+            border: 1px solid var(--tp-gray-border);
+            border-radius: 10px;
+            padding: 24px;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        .card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--tp-navy);
+        }
+        .card p {
+            font-size: 13px;
+            color: var(--tp-gray);
+            margin: 0;
+        }
+
+        /* Feature Highlight */
+        .feature-block {
+            background: var(--tp-bg);
+            border-left: 4px solid var(--tp-green);
+            border-radius: 0 8px 8px 0;
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+        .feature-block h4 {
+            margin: 0 0 8px;
+            color: var(--tp-navy);
+        }
+        .feature-block p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* Callout */
+        .callout {
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .callout-icon { font-size: 24px; flex-shrink: 0; }
+        .callout-green { background: var(--tp-green-light); border: 1px solid #A5D6A7; }
+        .callout-blue { background: var(--tp-blue-light); border: 1px solid #90CAF9; }
+        .callout-orange { background: var(--tp-orange-light); border: 1px solid #FFCC80; }
+        .callout-purple { background: var(--tp-purple-light); border: 1px solid #CE93D8; }
+
+        /* User Journey */
+        .journey {
+            display: flex;
+            gap: 0;
+            margin: 24px 0;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+        .journey-step {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+            padding: 0 12px;
+        }
+        .journey-step::after {
+            content: '';
+            position: absolute;
+            top: 24px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: var(--tp-green);
+            z-index: 0;
+        }
+        .journey-step:last-child::after { display: none; }
+        .journey-number {
+            display: inline-block;
+            width: 48px;
+            height: 48px;
+            line-height: 48px;
+            border-radius: 50%;
+            background: var(--tp-green);
+            color: var(--tp-navy);
+            font-weight: 700;
+            font-size: 18px;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 12px;
+        }
+        .journey-step h5 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .journey-step p {
+            font-size: 11px;
+            color: var(--tp-gray);
+        }
+
+        /* Metric Blocks */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: var(--tp-white);
+            border: 1px solid var(--tp-gray-border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--tp-green-dark);
+        }
+        .metric-label {
+            font-size: 13px;
+            color: var(--tp-gray);
+            margin-top: 4px;
+        }
+
+        /* Persona */
+        .persona {
+            display: flex;
+            gap: 24px;
+            background: var(--tp-bg);
+            border-radius: 10px;
+            padding: 24px;
+            margin: 16px 0;
+            border: 1px solid var(--tp-gray-border);
+        }
+        .persona-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--tp-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        .persona-info h4 { margin: 0 0 4px; font-size: 16px; }
+        .persona-info .role { font-size: 13px; color: var(--tp-gray); margin-bottom: 8px; }
+        .persona-info p { font-size: 13px; margin: 0; }
+
+        /* Pillar */
+        .pillar {
+            border: 2px solid var(--tp-green);
+            border-radius: 12px;
+            margin: 24px 0;
+            overflow: hidden;
+        }
+        .pillar-header {
+            background: var(--tp-green);
+            color: var(--tp-navy);
+            padding: 16px 24px;
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pillar-body { padding: 24px; }
+
+        /* Wireframe placeholder */
+        .wireframe {
+            background: var(--tp-bg);
+            border: 2px dashed var(--tp-gray-border);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            color: var(--tp-gray);
+            margin: 16px 0;
+        }
+        .wireframe-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        /* Lists */
+        ul, ol { margin: 12px 0 16px 24px; }
+        li { margin-bottom: 8px; font-size: 14px; color: #444; }
+        li strong { color: var(--tp-navy); }
+
+        /* Two Column */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 16px 0;
+        }
+
+        /* Divider */
+        hr {
+            border: none;
+            border-top: 1px solid var(--tp-gray-border);
+            margin: 32px 0;
+        }
+
+        /* Phase Timeline */
+        .phase-timeline {
+            position: relative;
+            padding-left: 32px;
+            margin: 24px 0;
+        }
+        .phase-timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--tp-green);
+        }
+        .phase-item {
+            position: relative;
+            margin-bottom: 32px;
+        }
+        .phase-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--tp-green);
+            border: 3px solid var(--tp-white);
+            box-shadow: 0 0 0 2px var(--tp-green);
+        }
+        .phase-item h4 {
+            font-size: 16px;
+            margin: 0 0 4px;
+        }
+        .phase-item .phase-date {
+            font-size: 12px;
+            color: var(--tp-gray);
+            margin-bottom: 8px;
+        }
+
+        /* Competitive Matrix */
+        .matrix-yes { color: #1B5E20; font-weight: 600; }
+        .matrix-no { color: #B71C1C; }
+        .matrix-partial { color: #E65100; }
+
+        @media (max-width: 768px) {
+            .header { padding: 32px 20px; }
+            .header h1 { font-size: 28px; }
+            .content { padding: 20px; }
+            .section { padding: 24px; }
+            .two-col { grid-template-columns: 1fr; }
+            .header-meta { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <span class="header-badge">New Product Definition</span>
+    <h1>Talk<span>Learn</span></h1>
+    <div class="subtitle">AI-Powered Onboarding Training &amp; E-Learning Platform</div>
+    <div class="header-meta">
+        <span><strong>Version:</strong> 1.0</span>
+        <span><strong>Date:</strong> February 11, 2026</span>
+        <span><strong>Owner:</strong> Product Management</span>
+        <span><strong>Status:</strong> Product Definition</span>
+        <span><strong>Priority:</strong> P1-High</span>
+    </div>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<div class="nav">
+    <div class="nav-inner">
+        <a href="#vision">Vision</a>
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#pillars">Core Pillars</a>
+        <a href="#ai-buddy">AI Buddy</a>
+        <a href="#content-engine">Content Engine</a>
+        <a href="#channels">Channels</a>
+        <a href="#personas">Personas</a>
+        <a href="#journey">Journey</a>
+        <a href="#features">Features</a>
+        <a href="#ui">UI Design</a>
+        <a href="#competitive">Competitive</a>
+        <a href="#metrics">Metrics</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#pricing">Pricing</a>
+    </div>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="content">
+
+<!-- SECTION 1: VISION -->
+<div class="section" id="vision">
+    <h2><span class="section-number">1</span> Product Vision</h2>
+
+    <div class="vision-box">
+        <p>TalkLearn transforms any company's onboarding content into an interactive, personalized learning experience delivered through the channels new hires already use. It's not an LMS. It's a learning companion &mdash; a buddy that turns boring policies into engaging conversations, static documents into dynamic podcasts, and compliance manuals into interactive WhatsApp sessions. Every new hire gets their own AI learning partner who adapts to their pace, tests their understanding, and makes the first 90 days feel like a guided adventure rather than an information dump.</p>
+    </div>
+
+    <h3>The One-Liner</h3>
+    <p style="font-size: 20px; font-weight: 600; color: var(--tp-navy); text-align: center; padding: 24px; background: var(--tp-green-light); border-radius: 10px;">
+        "Upload your content. We turn it into a learning experience. Delivered by an AI buddy your new hires will actually want to talk to."
+    </p>
+
+    <h3>Strategic Positioning</h3>
+    <p>TalkLearn extends Talkpush's platform from <strong>recruitment automation</strong> into <strong>onboarding training</strong> &mdash; owning the critical "first 90 days" that determine whether a new hire stays or leaves. This is a natural extension of the Talkpush Conversational AI that already engages candidates via WhatsApp, Messenger, SMS, and voice.</p>
+
+    <div class="callout callout-green">
+        <div class="callout-icon">&#127919;</div>
+        <div>
+            <strong>The Big Bet:</strong> Companies spend $6,500+ per trainee on classroom-based onboarding in BPO environments. TalkLearn can reduce this by 60-70% while achieving <strong>higher knowledge retention</strong> (85%+ vs. 25% for static courses) by delivering training through conversational AI on WhatsApp &mdash; a channel with 98% open rates and 90% response rates.
+        </div>
+    </div>
+
+    <h3>How It Fits in the Talkpush Ecosystem</h3>
+    <div class="journey">
+        <div class="journey-step">
+            <div class="journey-number">1</div>
+            <h5>Attract</h5>
+            <p>Source candidates from job boards &amp; social media</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">2</div>
+            <h5>Conversational AI</h5>
+            <p>Screen &amp; interview via WhatsApp, voice, chat</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">3</div>
+            <h5>Onboarding</h5>
+            <p>Documents, contracts, compliance</p>
+        </div>
+        <div class="journey-step" style="background: var(--tp-green-light); border-radius: 10px; padding-top: 12px; padding-bottom: 12px;">
+            <div class="journey-number" style="box-shadow: 0 0 0 4px rgba(0,230,118,0.3);">4</div>
+            <h5 style="color: var(--tp-green-dark);">TalkLearn</h5>
+            <p style="color: var(--tp-navy);"><strong>Train &amp; ramp up new hires</strong></p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">5</div>
+            <h5>Productive</h5>
+            <p>Fully ramped, contributing employee</p>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 2: PROBLEM -->
+<div class="section" id="problem">
+    <h2><span class="section-number">2</span> Problem Statement</h2>
+
+    <h3>The Onboarding Training Crisis</h3>
+    <p>Organizations are failing at the most critical phase of the employee lifecycle. Despite investing in formal onboarding programs, the execution gap is staggering:</p>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-value">20%</div>
+            <div class="metric-label">of organizations lose 50% of new hires in first 90 days</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">12%</div>
+            <div class="metric-label">of employees say their company does onboarding well</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">35%</div>
+            <div class="metric-label">average completion rate for generic onboarding content</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$6.5K</div>
+            <div class="metric-label">cost per trainee in BPO classroom training</div>
+        </div>
+    </div>
+
+    <h3>Why Current Solutions Fail</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Problem</th>
+                <th>Current Reality</th>
+                <th>Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Content creation is painful</strong></td>
+                <td>HR teams spend weeks converting policies into training materials. Most have SOPs in PDFs/Word docs that never become interactive learning.</td>
+                <td>Content is outdated before it's deployed; HR burned out</td>
+            </tr>
+            <tr>
+                <td><strong>Training is one-directional</strong></td>
+                <td>New hires read documents, watch videos, check boxes. No engagement, no dialogue, no validation of understanding.</td>
+                <td>25% knowledge retention; compliance risk</td>
+            </tr>
+            <tr>
+                <td><strong>Wrong channel, wrong time</strong></td>
+                <td>Training lives in an LMS portal that new hires never revisit. Deskless workers (80% of workforce) can't access desktop platforms.</td>
+                <td>Low completion rates; training not reaching frontline workers</td>
+            </tr>
+            <tr>
+                <td><strong>No personalization at scale</strong></td>
+                <td>Same content for everyone regardless of role, experience level, or learning pace. In high-volume hiring, one-size-fits-all is the only option.</td>
+                <td>Experienced hires bored; new-to-workforce hires overwhelmed</td>
+            </tr>
+            <tr>
+                <td><strong>No real understanding check</strong></td>
+                <td>Multiple-choice quizzes at the end. Employees click through to complete. No genuine validation of knowledge transfer.</td>
+                <td>Compliance on paper, not in practice</td>
+            </tr>
+            <tr>
+                <td><strong>Isolation during ramp-up</strong></td>
+                <td>New hires feel alone. Questions go unasked because "they should know this by now." No buddy system at scale.</td>
+                <td>25% early turnover driven by lack of belonging</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout callout-orange">
+        <div class="callout-icon">&#9888;&#65039;</div>
+        <div>
+            <strong>The High-Volume Hiring Problem:</strong> BPO companies like Concentrix, Genpact, and TaskUs hire thousands per month. Traditional classroom training costs $6,500 per trainee and takes 4-6 weeks. With 35%+ annual turnover, they're spending millions training people who leave within months. They need a scalable, mobile-first, conversational training solution &mdash; and nothing on the market delivers this today.
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 3: SOLUTION OVERVIEW -->
+<div class="section" id="solution">
+    <h2><span class="section-number">3</span> Solution Overview</h2>
+
+    <h3>TalkLearn in 60 Seconds</h3>
+    <p>TalkLearn is an <strong>AI-powered onboarding training platform</strong> that solves two fundamental problems simultaneously:</p>
+
+    <div class="two-col">
+        <div class="card" style="border-top: 4px solid var(--tp-green);">
+            <h4>For Companies (Content Creators)</h4>
+            <p><strong>Upload anything. Get training instantly.</strong></p>
+            <ul style="margin-left: 16px;">
+                <li>Drop a PDF, Word doc, PowerPoint, or video</li>
+                <li>AI transforms it into interactive learning modules</li>
+                <li>Auto-generates quizzes, conversations, podcasts, and video summaries</li>
+                <li>Deploy to WhatsApp, web, or voice in one click</li>
+                <li>Track completion and comprehension in real-time</li>
+            </ul>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--tp-blue);">
+            <h4>For New Hires (Learners)</h4>
+            <p><strong>Learn like you're chatting with a friend.</strong></p>
+            <ul style="margin-left: 16px;">
+                <li>AI buddy guides you through onboarding on WhatsApp</li>
+                <li>Bite-sized lessons that fit your schedule</li>
+                <li>Ask questions anytime and get instant answers</li>
+                <li>Personalized pace &mdash; skip what you know, dive deep where needed</li>
+                <li>Podcasts, videos, and conversations &mdash; not just documents</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>The Content Transformation Pipeline</h3>
+    <div style="background: var(--tp-bg); border-radius: 12px; padding: 32px; margin: 20px 0; text-align: center;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
+            <div style="background: var(--tp-white); border: 2px solid var(--tp-gray-border); border-radius: 10px; padding: 16px 24px; min-width: 140px;">
+                <div style="font-size: 28px;">&#128196;</div>
+                <div style="font-size: 13px; font-weight: 600; margin-top: 4px;">Upload Source</div>
+                <div style="font-size: 11px; color: var(--tp-gray);">PDF, DOCX, PPTX, Video, URL</div>
+            </div>
+            <div style="font-size: 24px; color: var(--tp-green);">&#10230;</div>
+            <div style="background: var(--tp-green); border-radius: 10px; padding: 16px 24px; min-width: 140px;">
+                <div style="font-size: 28px;">&#129302;</div>
+                <div style="font-size: 13px; font-weight: 700; margin-top: 4px; color: var(--tp-navy);">AI Engine</div>
+                <div style="font-size: 11px; color: var(--tp-navy);">Analyze, Structure, Transform</div>
+            </div>
+            <div style="font-size: 24px; color: var(--tp-green);">&#10230;</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: var(--tp-white); border: 2px solid var(--tp-green); border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 600;">&#128172; WhatsApp Conversation</div>
+                <div style="background: var(--tp-white); border: 2px solid var(--tp-blue); border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 600;">&#127908; Personalized Podcast</div>
+                <div style="background: var(--tp-white); border: 2px solid var(--tp-purple); border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 600;">&#127916; Video Lesson + Quiz</div>
+                <div style="background: var(--tp-white); border: 2px solid var(--tp-orange); border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 600;">&#127922; Interactive Simulation</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 4: CORE PILLARS -->
+<div class="section" id="pillars">
+    <h2><span class="section-number">4</span> The Five Pillars of TalkLearn</h2>
+
+    <!-- PILLAR 1 -->
+    <div class="pillar">
+        <div class="pillar-header">
+            <span style="font-size: 24px;">&#9889;</span>
+            Pillar 1: Magic Content Transformation Engine
+        </div>
+        <div class="pillar-body">
+            <p>The core value proposition. Companies upload raw content &mdash; TalkLearn transforms it into multi-format learning experiences instantly.</p>
+
+            <h4>Input Formats Supported</h4>
+            <table>
+                <thead>
+                    <tr><th>Format</th><th>Examples</th><th>AI Processing</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Documents</strong></td>
+                        <td>PDF, DOCX, TXT, Google Docs</td>
+                        <td>Extract key concepts, structure into chapters, generate Q&amp;A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Presentations</strong></td>
+                        <td>PPTX, Google Slides, Keynote</td>
+                        <td>Convert slides into lesson flow with narration scripts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Videos</strong></td>
+                        <td>MP4, YouTube links, recordings</td>
+                        <td>Transcribe, create chapters, generate validation questions per segment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web Content</strong></td>
+                        <td>URLs, knowledge base articles</td>
+                        <td>Scrape, structure, and create learning modules</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spreadsheets</strong></td>
+                        <td>XLSX, CSV (process docs, SOPs)</td>
+                        <td>Convert procedural data into step-by-step interactive guides</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Output Formats Generated</h4>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">&#128172;</div>
+                    <h4>WhatsApp Conversation</h4>
+                    <p>Document becomes a guided chat where the AI buddy walks the new hire through content with questions, encouragement, and validation checkpoints.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#127908;</div>
+                    <h4>Personalized Podcast</h4>
+                    <p>AI generates a two-host podcast discussing the content in a natural, engaging way &mdash; personalized with the employee's name and role context.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#127916;</div>
+                    <h4>Video Lesson</h4>
+                    <p>AI avatar presents key content with visual aids, automatically pausing for comprehension questions at critical moments.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#127922;</div>
+                    <h4>Interactive Simulation</h4>
+                    <p>Scenario-based roleplay where the new hire practices real situations (handling a customer call, processing a return, etc.).</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#128218;</div>
+                    <h4>Microlearning Cards</h4>
+                    <p>TikTok-style swipeable cards for quick knowledge checks &mdash; perfect for 5-minute daily reinforcement sessions.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#128202;</div>
+                    <h4>Assessment &amp; Quiz</h4>
+                    <p>Auto-generated quizzes with multiple difficulty levels, scenario-based questions, and spaced repetition scheduling.</p>
+                </div>
+            </div>
+
+            <div class="callout callout-green">
+                <div class="callout-icon">&#128161;</div>
+                <div>
+                    <strong>The Magic Moment:</strong> An HR manager uploads a 40-page employee handbook as a PDF. Within 3 minutes, TalkLearn has generated: a 5-part WhatsApp conversation series, a 12-minute podcast, 45 quiz questions across 3 difficulty levels, and a progress-tracked learning path. No manual course building required.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PILLAR 2 -->
+    <div class="pillar">
+        <div class="pillar-header">
+            <span style="font-size: 24px;">&#129302;</span>
+            Pillar 2: The AI Onboarding Buddy
+        </div>
+        <div class="pillar-body" id="ai-buddy">
+            <p>Every new hire gets a personal AI companion that acts as their friendly guide throughout the onboarding journey. It's not a chatbot that answers FAQs &mdash; it's a learning partner that remembers context, adapts to pace, celebrates progress, and genuinely cares about the new hire's success.</p>
+
+            <h4>Buddy Personality Traits</h4>
+            <div class="two-col">
+                <div>
+                    <ul>
+                        <li><strong>Warm &amp; Encouraging:</strong> Celebrates milestones, uses positive reinforcement</li>
+                        <li><strong>Patient &amp; Adaptive:</strong> Explains concepts differently when someone doesn't understand</li>
+                        <li><strong>Contextually Aware:</strong> Knows the employee's role, team, start date, and learning progress</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li><strong>Proactively Helpful:</strong> Sends morning check-ins, suggests next lessons, reminds about deadlines</li>
+                        <li><strong>Honest &amp; Transparent:</strong> Escalates to a human when the question is beyond its scope</li>
+                        <li><strong>Culturally Aware:</strong> Adapts tone and style to the company's culture and the employee's language</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>What the Buddy Can Do</h4>
+            <table>
+                <thead>
+                    <tr><th>Capability</th><th>Example Interaction</th><th>Channel</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Guided Learning</strong></td>
+                        <td>"Let's go through the customer service guidelines together. I'll explain each section and check if you have questions."</td>
+                        <td>WhatsApp, Web</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Knowledge Q&amp;A</strong></td>
+                        <td>"What's the dress code for my first day?" &rarr; Instant answer sourced from company handbook</td>
+                        <td>WhatsApp, Web, Voice</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Validation Checks</strong></td>
+                        <td>"Quick check! A customer asks for a refund outside the 30-day window. What do you do?" + explains correct answer</td>
+                        <td>WhatsApp, Web</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Progress Updates</strong></td>
+                        <td>"You've completed 4 of 7 modules! You're ahead of schedule. Want to tackle the next one or take a break?"</td>
+                        <td>WhatsApp, Web</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Emotional Check-in</strong></td>
+                        <td>"Hey! It's your second week. How are you feeling about things so far? Anything I can help with?"</td>
+                        <td>WhatsApp, Voice</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meeting Prep</strong></td>
+                        <td>"You have a team meeting tomorrow with Sarah's team. Here's what the team works on and a few conversation starters."</td>
+                        <td>WhatsApp, Web</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Podcast Conversation</strong></td>
+                        <td>Generates a personalized podcast episode: "Welcome to Day 3 at Concentrix, Maria! Today we'll cover call handling..."</td>
+                        <td>Audio (WhatsApp, Web)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Roleplay &amp; Practice</strong></td>
+                        <td>"Let's practice! I'll be an upset customer. Your goal is to de-escalate. Ready?"</td>
+                        <td>WhatsApp, Voice (Sam)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout-purple">
+                <div class="callout-icon">&#127897;&#65039;</div>
+                <div>
+                    <strong>The Personalized Podcast:</strong> TalkLearn generates custom podcast episodes for each new hire. Imagine: "Welcome to Episode 3 of your onboarding journey, Carlos! Today, we're breaking down the escalation process. By the end, you'll know exactly when to handle it yourself and when to loop in your team lead. Let's dive in..." &mdash; complete with the employee's name, role-specific content, and interactive pause-and-answer moments.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PILLAR 3 -->
+    <div class="pillar">
+        <div class="pillar-header">
+            <span style="font-size: 24px;">&#128241;</span>
+            Pillar 3: Multi-Channel Delivery
+        </div>
+        <div class="pillar-body" id="channels">
+            <p>Training reaches new hires where they already are &mdash; no app downloads, no portal logins, no friction.</p>
+
+            <table>
+                <thead>
+                    <tr><th>Channel</th><th>Best For</th><th>Content Types</th><th>Talkpush Leverage</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>WhatsApp</strong> <span class="badge badge-green">Primary</span></td>
+                        <td>Daily lessons, conversations, quizzes, check-ins</td>
+                        <td>Text, images, audio, video clips, interactive buttons</td>
+                        <td>Existing WhatsApp Business API integration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Voice (Sam)</strong></td>
+                        <td>Roleplay, assessments, emotional check-ins, podcast delivery</td>
+                        <td>AI voice conversations, audio lessons, call simulations</td>
+                        <td>Sam voice AI engine</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web Portal</strong></td>
+                        <td>Dashboards, video lessons, detailed content, certificates</td>
+                        <td>Full multimedia, progress dashboards, document library</td>
+                        <td>Existing Talkpush web platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SMS</strong></td>
+                        <td>Reminders, quick knowledge checks, nudges</td>
+                        <td>Short text, links to content</td>
+                        <td>Existing SMS integration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Messenger</strong></td>
+                        <td>Same as WhatsApp for markets where Messenger dominates</td>
+                        <td>Text, images, quick replies, webview</td>
+                        <td>Existing Messenger integration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email</strong></td>
+                        <td>Weekly summaries, certificates, manager reports</td>
+                        <td>Rich HTML, attachments, links</td>
+                        <td>Standard email delivery</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="feature-block">
+                <h4>The WhatsApp Training Experience</h4>
+                <p>A document about "Customer Escalation Procedures" becomes a 5-message conversation over 2 days:</p>
+                <ul>
+                    <li><strong>Message 1:</strong> "Hey Maria! Today let's learn about handling customer escalations. There are 3 types. Want me to walk you through them?" [Yes / Later]</li>
+                    <li><strong>Message 2:</strong> Explains Type 1 with a scenario + asks: "What would you do?" [Multiple choice buttons]</li>
+                    <li><strong>Message 3:</strong> Provides feedback on answer + explains correct approach + audio summary</li>
+                    <li><strong>Message 4:</strong> Next day: "Morning! Quick recap from yesterday &mdash; can you remember the 3 types of escalation?" [Open text response]</li>
+                    <li><strong>Message 5:</strong> AI evaluates response, reinforces gaps, sends completion badge</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PILLAR 4 -->
+    <div class="pillar">
+        <div class="pillar-header">
+            <span style="font-size: 24px;">&#128200;</span>
+            Pillar 4: Progress Intelligence &amp; Analytics
+        </div>
+        <div class="pillar-body">
+            <p>Real-time visibility into every new hire's learning journey &mdash; from content completion to genuine knowledge retention.</p>
+
+            <h4>Tracking Dimensions</h4>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">&#9989;</div>
+                    <h4>Completion Tracking</h4>
+                    <p>Module-by-module progress, time spent, engagement rate per content type. Not just "opened" but "actively engaged."</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#129504;</div>
+                    <h4>Knowledge Retention</h4>
+                    <p>Spaced repetition quizzes measure real understanding over time, not just immediate recall. Tracks knowledge decay curves.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#128337;</div>
+                    <h4>Time-to-Competency</h4>
+                    <p>Measures when a new hire reaches proficiency benchmarks for their role. Predicts ramp-up timeline based on learning velocity.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#128578;</div>
+                    <h4>Sentiment &amp; Engagement</h4>
+                    <p>AI analyzes response patterns and buddy interactions to detect confusion, frustration, or disengagement early.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#128101;</div>
+                    <h4>Cohort Analytics</h4>
+                    <p>Compare training effectiveness across hiring cohorts, locations, departments, and content formats.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">&#9888;&#65039;</div>
+                    <h4>Risk Alerts</h4>
+                    <p>Early warning system identifies new hires falling behind or showing signs of disengagement before it's too late.</p>
+                </div>
+            </div>
+
+            <h4>Manager Dashboard Metrics</h4>
+            <table>
+                <thead>
+                    <tr><th>Metric</th><th>What It Shows</th><th>Action Trigger</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Learning Velocity Score</strong></td>
+                        <td>How fast each hire progresses vs. expected pace</td>
+                        <td>Auto-notify manager if &lt; 60% expected pace</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Knowledge Mastery %</strong></td>
+                        <td>Correct answers across all validation points</td>
+                        <td>Schedule review session if &lt; 70% mastery</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Engagement Score</strong></td>
+                        <td>Response rate, time-to-response, buddy interaction frequency</td>
+                        <td>Flag disengagement after 48hrs of silence</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Content Effectiveness</strong></td>
+                        <td>Which modules have highest/lowest comprehension rates</td>
+                        <td>Suggest content revision for modules &lt; 60% pass</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Predicted Ramp-Up Date</strong></td>
+                        <td>AI-predicted date when new hire reaches full competency</td>
+                        <td>Alert if prediction exceeds acceptable ramp-up window</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PILLAR 5 -->
+    <div class="pillar">
+        <div class="pillar-header">
+            <span style="font-size: 24px;">&#128274;</span>
+            Pillar 5: Compliance &amp; Certification Engine
+        </div>
+        <div class="pillar-body">
+            <p>Automated compliance training with audit-ready tracking &mdash; critical for BPO, financial services, and healthcare clients.</p>
+
+            <div class="two-col">
+                <div>
+                    <h4>Compliance Features</h4>
+                    <ul>
+                        <li><strong>Mandatory Module Enforcement:</strong> Block advancement until compliance modules are passed</li>
+                        <li><strong>Digital Signatures:</strong> Employees acknowledge policy understanding with e-signatures (TalkSign integration)</li>
+                        <li><strong>Audit Trail:</strong> Complete log of who completed what, when, scores, and attempts</li>
+                        <li><strong>Expiration &amp; Recertification:</strong> Automatic reminders when certifications expire</li>
+                        <li><strong>Regulatory Templates:</strong> Pre-built modules for TCPA, PCI-DSS, HIPAA, GDPR, SOX</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Certification System</h4>
+                    <ul>
+                        <li><strong>Digital Badges:</strong> Awarded upon module completion &mdash; shareable on LinkedIn</li>
+                        <li><strong>Skill Certificates:</strong> PDF certificates with QR verification codes</li>
+                        <li><strong>Proficiency Levels:</strong> Bronze, Silver, Gold based on assessment scores</li>
+                        <li><strong>Manager Sign-Off:</strong> Optional human verification step before certification</li>
+                        <li><strong>Continuous Validation:</strong> Periodic re-checks to ensure knowledge retention</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 5: TARGET PERSONAS -->
+<div class="section" id="personas">
+    <h2><span class="section-number">5</span> Target Personas</h2>
+
+    <div class="persona">
+        <div class="persona-avatar">&#128105;&#8205;&#128188;</div>
+        <div class="persona-info">
+            <h4>Sarah, HR Training Manager</h4>
+            <div class="role">Concentrix &bull; Manila, Philippines &bull; Manages onboarding for 200+ hires/month</div>
+            <p><strong>Pain:</strong> Spends 3 weeks building classroom training for each new campaign. Content is outdated by the time it's ready. Can't scale beyond classroom sessions.</p>
+            <p><strong>Dream:</strong> Upload the campaign brief and client playbook on Monday &rarr; Training program ready and deployed to new hires' WhatsApp by Wednesday.</p>
+        </div>
+    </div>
+
+    <div class="persona">
+        <div class="persona-avatar">&#128104;&#8205;&#128187;</div>
+        <div class="persona-info">
+            <h4>Carlos, New Customer Service Agent</h4>
+            <div class="role">BPO Company &bull; Bogot&aacute;, Colombia &bull; Just hired, starts next Monday</div>
+            <p><strong>Pain:</strong> Overwhelmed by 6 weeks of classroom training. Boring PowerPoints. Afraid to ask "dumb questions" in front of 30 other new hires. Commutes 90 minutes each way.</p>
+            <p><strong>Dream:</strong> Learn at his own pace on WhatsApp during his commute. Practice customer scenarios with an AI buddy that doesn't judge. Know exactly where he stands and what's next.</p>
+        </div>
+    </div>
+
+    <div class="persona">
+        <div class="persona-avatar">&#128105;&#8205;&#128187;</div>
+        <div class="persona-info">
+            <h4>Lisa, VP of Operations</h4>
+            <div class="role">Large BPO &bull; Global &bull; Oversees 15,000 employees across 12 sites</div>
+            <p><strong>Pain:</strong> Inconsistent onboarding quality across locations. No visibility into whether training actually works until agents hit the floor. Turnover during onboarding costs $2M/year.</p>
+            <p><strong>Dream:</strong> A single dashboard showing real-time training progress across all sites. Predict which hires will struggle before it's too late. Prove ROI of training investments with data.</p>
+        </div>
+    </div>
+
+    <div class="persona">
+        <div class="persona-avatar">&#128104;&#8205;&#127891;</div>
+        <div class="persona-info">
+            <h4>Miguel, Store Manager</h4>
+            <div class="role">Retail Chain &bull; Mexico City &bull; Manages 45 employees, 8 new hires this month</div>
+            <p><strong>Pain:</strong> Has to personally train each new hire because there's no structured program. Takes 2 hours per person away from managing the store.</p>
+            <p><strong>Dream:</strong> New hires arrive with basic product knowledge already learned via WhatsApp. He just needs to do hands-on coaching for the store-specific stuff.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 6: USER JOURNEY -->
+<div class="section" id="journey">
+    <h2><span class="section-number">6</span> User Journeys</h2>
+
+    <h3>Journey A: Content Creator (HR / Training Manager)</h3>
+    <div class="journey">
+        <div class="journey-step">
+            <div class="journey-number">1</div>
+            <h5>Upload</h5>
+            <p>Drag &amp; drop documents, videos, or links into TalkLearn</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">2</div>
+            <h5>Transform</h5>
+            <p>AI analyzes and generates multi-format learning modules</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">3</div>
+            <h5>Review</h5>
+            <p>Preview generated content, edit if needed, approve</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">4</div>
+            <h5>Assign</h5>
+            <p>Assign to roles, teams, or individual hires</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">5</div>
+            <h5>Monitor</h5>
+            <p>Track completion, scores, and engagement in real-time</p>
+        </div>
+    </div>
+
+    <h3>Journey B: New Hire (Learner)</h3>
+    <div class="journey">
+        <div class="journey-step">
+            <div class="journey-number">1</div>
+            <h5>Welcome</h5>
+            <p>AI buddy sends first message on WhatsApp: "Hey! I'm Tali, your onboarding buddy"</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">2</div>
+            <h5>Learn Daily</h5>
+            <p>5-15 min daily sessions via chat, audio, or video</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">3</div>
+            <h5>Practice</h5>
+            <p>Roleplay scenarios, answer questions, complete simulations</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">4</div>
+            <h5>Validate</h5>
+            <p>Spaced quizzes confirm real understanding, not just memory</p>
+        </div>
+        <div class="journey-step">
+            <div class="journey-number">5</div>
+            <h5>Certify</h5>
+            <p>Earn badges and certificates, marked as "job-ready"</p>
+        </div>
+    </div>
+
+    <h3>A Day in Carlos's Life with TalkLearn</h3>
+    <div style="background: var(--tp-bg); border-radius: 12px; padding: 24px; margin: 20px 0;">
+        <table>
+            <thead>
+                <tr><th style="width: 100px;">Time</th><th>Activity</th><th>Channel</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>7:30 AM</strong></td>
+                    <td>On the bus. Listens to today's personalized podcast episode: "Episode 4: Handling angry customers at Concentrix &mdash; the EASE method" (12 min)</td>
+                    <td>&#127908; Audio via WhatsApp</td>
+                </tr>
+                <tr>
+                    <td><strong>8:15 AM</strong></td>
+                    <td>Buddy sends morning message: "Morning Carlos! Quick recap &mdash; yesterday's escalation types. Can you name all 3?" Carlos types his answer.</td>
+                    <td>&#128172; WhatsApp</td>
+                </tr>
+                <tr>
+                    <td><strong>9:00 AM</strong></td>
+                    <td>Arrives at office. Opens web portal for today's video module on CRM system navigation. Watches 8-min video, answers 3 embedded questions.</td>
+                    <td>&#128187; Web Portal</td>
+                </tr>
+                <tr>
+                    <td><strong>11:00 AM</strong></td>
+                    <td>AI buddy: "Ready for your first practice call? I'll be the customer. Scenario: account billing dispute. Let's go!" 5-min voice roleplay via Sam.</td>
+                    <td>&#128222; Voice (Sam)</td>
+                </tr>
+                <tr>
+                    <td><strong>12:30 PM</strong></td>
+                    <td>Lunch break. Swipes through microlearning cards about product catalog. Gamified &mdash; each correct answer earns points.</td>
+                    <td>&#128241; WhatsApp Cards</td>
+                </tr>
+                <tr>
+                    <td><strong>3:00 PM</strong></td>
+                    <td>Buddy check-in: "How's your energy? You've completed 80% of today's modules! One more and you'll earn your CRM Navigator badge."</td>
+                    <td>&#128172; WhatsApp</td>
+                </tr>
+                <tr>
+                    <td><strong>5:30 PM</strong></td>
+                    <td>On bus home. Buddy sends daily summary: "Great day! You scored 87% on the billing quiz and handled the roleplay like a pro. Tomorrow: advanced escalation techniques."</td>
+                    <td>&#128172; WhatsApp</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- SECTION 7: DETAILED FEATURE BREAKDOWN -->
+<div class="section" id="features">
+    <h2><span class="section-number">7</span> Detailed Feature Breakdown</h2>
+
+    <h3>7.1 Content Studio (Admin)</h3>
+    <table>
+        <thead>
+            <tr><th>Feature</th><th>Description</th><th>Priority</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Drag &amp; Drop Upload</strong></td>
+                <td>Upload any file (PDF, DOCX, PPTX, MP4, URLs). Batch upload supported.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>AI Content Analyzer</strong></td>
+                <td>Extracts key topics, concepts, terminology, and learning objectives from source material automatically.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Multi-Format Generator</strong></td>
+                <td>One-click generation of WhatsApp conversations, quizzes, podcasts, video lessons, microlearning cards.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Content Editor</strong></td>
+                <td>Review and edit AI-generated content before deployment. Preview in each channel format.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Learning Path Builder</strong></td>
+                <td>Visual drag-and-drop builder to create learning sequences with prerequisites and branching logic.</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Template Library</strong></td>
+                <td>Pre-built templates for common industries (BPO, retail, financial services) and compliance topics.</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Quiz Generator Controls</strong></td>
+                <td>Set difficulty levels, question types, passing thresholds, retry limits, and spaced repetition intervals.</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Podcast Studio</strong></td>
+                <td>Customize podcast format: host voices, episode length, personalization level, intro/outro branding.</td>
+                <td><span class="badge badge-blue">P2</span></td>
+            </tr>
+            <tr>
+                <td><strong>Video Avatar Customization</strong></td>
+                <td>Choose AI presenter appearance, language, accent. Option to clone a company spokesperson's voice.</td>
+                <td><span class="badge badge-blue">P2</span></td>
+            </tr>
+            <tr>
+                <td><strong>Content Version Control</strong></td>
+                <td>Track changes, compare versions, auto-update deployed content when source material changes.</td>
+                <td><span class="badge badge-blue">P2</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>7.2 AI Buddy Engine</h3>
+    <table>
+        <thead>
+            <tr><th>Feature</th><th>Description</th><th>Priority</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Conversational Learning</strong></td>
+                <td>AI-guided conversations that teach content through dialogue, not lecture. Socratic method adapted for onboarding.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Contextual Q&amp;A</strong></td>
+                <td>Answer any question about company policies, procedures, or culture using the uploaded knowledge base.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Adaptive Pacing</strong></td>
+                <td>Adjust content difficulty and speed based on individual performance. Skip mastered topics, reinforce weak areas.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Validation Questions</strong></td>
+                <td>Embed understanding checks throughout conversations. Not end-of-module quizzes &mdash; woven into the learning flow.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Emotional Intelligence</strong></td>
+                <td>Detect frustration, confusion, or disengagement from response patterns. Adapt tone and offer support.</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Roleplay &amp; Simulations</strong></td>
+                <td>Practice real-world scenarios via voice (Sam) or chat. AI plays customer, colleague, or manager role.</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Personalized Podcast Generation</strong></td>
+                <td>Create podcast episodes with employee's name, role context, and personalized learning agenda.</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Multilingual Buddy</strong></td>
+                <td>Buddy communicates in the new hire's preferred language. Auto-translates content while maintaining accuracy.</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Manager Escalation</strong></td>
+                <td>Route complex or sensitive questions to human managers with full context of the conversation.</td>
+                <td><span class="badge badge-blue">P2</span></td>
+            </tr>
+            <tr>
+                <td><strong>Social Learning</strong></td>
+                <td>Connect new hires in the same cohort for peer learning. Buddy facilitates introductions and group challenges.</td>
+                <td><span class="badge badge-purple">P3</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>7.3 Analytics &amp; Reporting</h3>
+    <table>
+        <thead>
+            <tr><th>Feature</th><th>Description</th><th>Priority</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Individual Progress Dashboard</strong></td>
+                <td>Per-hire view of completion %, scores, time spent, engagement metrics, predicted ramp-up date.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Cohort Overview</strong></td>
+                <td>Compare hiring cohorts across completion rates, average scores, time-to-competency.</td>
+                <td><span class="badge badge-green">P0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Content Effectiveness Report</strong></td>
+                <td>Which modules have highest/lowest pass rates, engagement, and retention scores.</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Risk Alert Dashboard</strong></td>
+                <td>At-risk new hires flagged with reasons (low engagement, failing quizzes, skipping modules).</td>
+                <td><span class="badge badge-orange">P1</span></td>
+            </tr>
+            <tr>
+                <td><strong>ROI Calculator</strong></td>
+                <td>Compare TalkLearn costs vs. traditional training. Show savings in time, money, and turnover reduction.</td>
+                <td><span class="badge badge-blue">P2</span></td>
+            </tr>
+            <tr>
+                <td><strong>Exportable Reports</strong></td>
+                <td>PDF/CSV exports for stakeholder presentations and compliance audits.</td>
+                <td><span class="badge badge-blue">P2</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION 8: UI DESIGN -->
+<div class="section" id="ui">
+    <h2><span class="section-number">8</span> UI/UX Design Specifications</h2>
+
+    <h3>8.1 Admin: Content Studio</h3>
+    <div class="wireframe">
+        <div class="wireframe-label">Content Studio &mdash; Upload &amp; Transform View</div>
+        <p>Layout: Left sidebar navigation (TalkLearn branding) + Main content area</p>
+        <p style="font-size: 12px; margin-top: 12px;">
+            [Sidebar: Dashboard | Content Studio | Learning Paths | Analytics | Settings]<br>
+            [Main: Upload Zone (drag &amp; drop) | Recent Uploads | Quick Actions]<br>
+            [After upload: Source Preview (left) | Generated Outputs (right) &mdash; toggle between WhatsApp / Podcast / Video / Quiz]<br>
+            [CTA: "Deploy to Learners" button in Talkpush Green #00E676]
+        </p>
+    </div>
+
+    <h4>Key UI Components</h4>
+    <ul>
+        <li><strong>Upload Zone:</strong> Large drag-and-drop area with dashed border, supporting file icon previews. Talkpush Green border on hover.</li>
+        <li><strong>Content Preview Tabs:</strong> Toggle between output formats (WhatsApp, Podcast, Video, Quiz, Simulation) with live preview</li>
+        <li><strong>Deploy Button:</strong> Primary CTA in Talkpush Green (#00E676), positioned top-right of content preview</li>
+        <li><strong>Progress Indicator:</strong> Green progress bar showing AI transformation status (Analyzing &rarr; Structuring &rarr; Generating &rarr; Ready)</li>
+        <li><strong>Status Badges:</strong> Draft (gray), Reviewing (orange), Published (green), Archived (red)</li>
+    </ul>
+
+    <h3>8.2 Admin: Analytics Dashboard</h3>
+    <div class="wireframe">
+        <div class="wireframe-label">Analytics Dashboard &mdash; Cohort Overview</div>
+        <p>Layout: Full-width dashboard with metric cards row + data table + charts</p>
+        <p style="font-size: 12px; margin-top: 12px;">
+            [Top: 4 Metric Cards &mdash; Active Learners | Avg. Completion Rate | Avg. Knowledge Score | At-Risk Count]<br>
+            [Middle: Area chart showing completion trend over time | Bar chart of scores by module]<br>
+            [Bottom: Data table with columns: Name | Role | Start Date | Progress | Score | Engagement | Status]<br>
+            [Row actions: View Profile | Send Nudge | Assign Module | Flag to Manager]<br>
+            [Filters: Date Range | Department | Location | Risk Level]
+        </p>
+    </div>
+
+    <h4>Dashboard Design Principles</h4>
+    <ul>
+        <li><strong>Data-Dense but Scannable:</strong> Metric cards at top for instant KPI overview (white cards on light gray bg)</li>
+        <li><strong>Color-Coded Status:</strong> Green (On Track / High Score), Orange (At Risk / Medium), Red (Critical / Low)</li>
+        <li><strong>Sortable Tables:</strong> Click column headers to sort. Hover rows for action menu</li>
+        <li><strong>Real-Time:</strong> Live-updating metrics with subtle animation on value changes</li>
+    </ul>
+
+    <h3>8.3 Learner: WhatsApp Experience</h3>
+    <div class="wireframe">
+        <div class="wireframe-label">WhatsApp Training Conversation &mdash; Learner View</div>
+        <p style="font-size: 12px; margin-top: 12px;">
+            [WhatsApp Chat with "Tali - Your Onboarding Buddy" as contact name]<br>
+            [Message: "Good morning, Carlos! Ready for today's lesson on call handling? We'll cover the EASE method in about 10 minutes."]<br>
+            [Quick Reply Buttons: "Let's go!" | "Maybe later" | "Skip &mdash; I know this"]<br>
+            [Image: Infographic explaining EASE method with branded Talkpush colors]<br>
+            [Message: "Now let me check if that makes sense. A customer says: 'I've been waiting for 20 minutes!' What's your first step?"]<br>
+            [Quick Reply Buttons: "Empathize" | "Apologize" | "Escalate" | "Solve"]<br>
+            [After correct answer: Celebration message + score update + next topic preview]<br>
+            [Audio Message: 2-minute podcast clip on advanced empathy techniques]
+        </p>
+    </div>
+
+    <h3>8.4 Learner: Web Portal</h3>
+    <div class="wireframe">
+        <div class="wireframe-label">Learner Portal &mdash; My Learning Journey</div>
+        <p style="font-size: 12px; margin-top: 12px;">
+            [Top: Welcome banner with progress ring "You're 64% through your onboarding!" in Talkpush Green]<br>
+            [Left: Learning path visualization (vertical timeline with completed/current/upcoming modules)]<br>
+            [Center: Current module card with video player + embedded quiz + completion CTA]<br>
+            [Right: Buddy chat widget (persistent) + upcoming schedule + earned badges]<br>
+            [Bottom: Recommended next modules + "Ask your buddy" quick action]
+        </p>
+    </div>
+</div>
+
+<!-- SECTION 9: COMPETITIVE POSITIONING -->
+<div class="section" id="competitive">
+    <h2><span class="section-number">9</span> Competitive Positioning</h2>
+
+    <h3>Feature Comparison Matrix</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Capability</th>
+                <th style="text-align: center;">TalkLearn</th>
+                <th style="text-align: center;">EdApp</th>
+                <th style="text-align: center;">Axonify</th>
+                <th style="text-align: center;">360Learning</th>
+                <th style="text-align: center;">Trainual</th>
+                <th style="text-align: center;">Generic LMS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Auto document-to-training</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; Full AI</td>
+                <td style="text-align: center;" class="matrix-partial">Partial</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-partial">Partial</td>
+                <td style="text-align: center;" class="matrix-partial">AI assist</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+            </tr>
+            <tr>
+                <td><strong>WhatsApp training delivery</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; Native</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+            </tr>
+            <tr>
+                <td><strong>AI buddy / companion</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; Full</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-partial">Basic</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+            </tr>
+            <tr>
+                <td><strong>Personalized podcasts</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; AI gen</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+            </tr>
+            <tr>
+                <td><strong>Voice roleplay / simulations</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; Sam AI</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-partial">Basic</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+            </tr>
+            <tr>
+                <td><strong>Recruitment &rarr; Training integration</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; Native</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-no">&#10008;</td>
+                <td style="text-align: center;" class="matrix-partial">API</td>
+            </tr>
+            <tr>
+                <td><strong>High-volume hiring scale</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; Built for</td>
+                <td style="text-align: center;" class="matrix-yes">&#10004;</td>
+                <td style="text-align: center;" class="matrix-yes">&#10004;</td>
+                <td style="text-align: center;" class="matrix-partial">Mid-market</td>
+                <td style="text-align: center;" class="matrix-no">SMB</td>
+                <td style="text-align: center;" class="matrix-partial">Varies</td>
+            </tr>
+            <tr>
+                <td><strong>Mobile-first / deskless workers</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; WhatsApp</td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; App</td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; App</td>
+                <td style="text-align: center;" class="matrix-partial">Web</td>
+                <td style="text-align: center;" class="matrix-partial">Web</td>
+                <td style="text-align: center;" class="matrix-no">Desktop</td>
+            </tr>
+            <tr>
+                <td><strong>Multilingual (28+ languages)</strong></td>
+                <td style="text-align: center;" class="matrix-yes">&#10004; AI</td>
+                <td style="text-align: center;" class="matrix-partial">Limited</td>
+                <td style="text-align: center;" class="matrix-partial">Limited</td>
+                <td style="text-align: center;" class="matrix-yes">&#10004;</td>
+                <td style="text-align: center;" class="matrix-partial">Limited</td>
+                <td style="text-align: center;" class="matrix-partial">Varies</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout callout-green">
+        <div class="callout-icon">&#127942;</div>
+        <div>
+            <strong>TalkLearn's Moat:</strong> No competitor combines <strong>automatic content transformation + conversational AI delivery + WhatsApp as primary channel + voice AI roleplay + recruitment data integration</strong>. This is a unique combination that only Talkpush can build because of its existing technology stack, client relationships, and high-volume hiring expertise.
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 10: SUCCESS METRICS -->
+<div class="section" id="metrics">
+    <h2><span class="section-number">10</span> Success Metrics &amp; KPIs</h2>
+
+    <h3>North Star Metric</h3>
+    <div style="text-align: center; padding: 24px; background: var(--tp-green-light); border-radius: 10px; margin: 16px 0;">
+        <div style="font-size: 14px; font-weight: 600; color: var(--tp-gray); text-transform: uppercase; letter-spacing: 1px;">North Star</div>
+        <div style="font-size: 28px; font-weight: 800; color: var(--tp-navy); margin: 8px 0;">Time-to-Productive Employee</div>
+        <div style="font-size: 15px; color: var(--tp-gray);">The number of days from hire date to when a new employee meets minimum competency benchmarks</div>
+    </div>
+
+    <h3>Primary KPIs</h3>
+    <div class="metrics-row">
+        <div class="metric-card" style="border-top: 3px solid var(--tp-green);">
+            <div class="metric-value">50%</div>
+            <div class="metric-label">Reduction in time-to-competency vs. classroom training</div>
+        </div>
+        <div class="metric-card" style="border-top: 3px solid var(--tp-green);">
+            <div class="metric-value">85%+</div>
+            <div class="metric-label">Training completion rate (vs. 35% industry average)</div>
+        </div>
+        <div class="metric-card" style="border-top: 3px solid var(--tp-green);">
+            <div class="metric-value">80%+</div>
+            <div class="metric-label">Knowledge retention at 30 days (vs. 25% for static content)</div>
+        </div>
+        <div class="metric-card" style="border-top: 3px solid var(--tp-green);">
+            <div class="metric-value">60%</div>
+            <div class="metric-label">Reduction in training cost per new hire</div>
+        </div>
+    </div>
+
+    <h3>Detailed Metrics Framework</h3>
+    <table>
+        <thead>
+            <tr><th>Category</th><th>Metric</th><th>Target</th><th>Measurement</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="3"><strong>Engagement</strong></td>
+                <td>Daily active learners</td>
+                <td>70% of enrolled</td>
+                <td>Unique learners with buddy interaction per day</td>
+            </tr>
+            <tr>
+                <td>Average session duration</td>
+                <td>10-15 minutes</td>
+                <td>Time from first to last interaction per session</td>
+            </tr>
+            <tr>
+                <td>Content interaction rate</td>
+                <td>90%+ response rate</td>
+                <td>% of buddy messages that receive a response</td>
+            </tr>
+            <tr>
+                <td rowspan="3"><strong>Learning Outcomes</strong></td>
+                <td>Quiz pass rate (first attempt)</td>
+                <td>75%+</td>
+                <td>Passing score on first quiz attempt</td>
+            </tr>
+            <tr>
+                <td>30-day retention score</td>
+                <td>80%+</td>
+                <td>Spaced repetition quiz score at 30 days</td>
+            </tr>
+            <tr>
+                <td>Roleplay competency score</td>
+                <td>70%+</td>
+                <td>AI-evaluated scenario performance</td>
+            </tr>
+            <tr>
+                <td rowspan="3"><strong>Business Impact</strong></td>
+                <td>90-day retention rate</td>
+                <td>15% improvement</td>
+                <td>% of new hires retained at 90 days vs. baseline</td>
+            </tr>
+            <tr>
+                <td>Training cost per hire</td>
+                <td>60% reduction</td>
+                <td>Total training cost / number of hires trained</td>
+            </tr>
+            <tr>
+                <td>Time-to-productivity</td>
+                <td>50% reduction</td>
+                <td>Days from hire to meeting performance benchmarks</td>
+            </tr>
+            <tr>
+                <td rowspan="2"><strong>Platform</strong></td>
+                <td>Content creation time</td>
+                <td>&lt; 5 minutes</td>
+                <td>Upload to deployment-ready in minutes, not weeks</td>
+            </tr>
+            <tr>
+                <td>Learner NPS</td>
+                <td>50+</td>
+                <td>Net Promoter Score from learner surveys at 30/60/90 days</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION 11: ROADMAP -->
+<div class="section" id="roadmap">
+    <h2><span class="section-number">11</span> Product Roadmap</h2>
+
+    <div class="phase-timeline">
+        <div class="phase-item">
+            <h4>Phase 1: Foundation <span class="badge badge-green">Months 1-4</span></h4>
+            <div class="phase-date">MVP &mdash; Prove the Content Transformation Value</div>
+            <ul>
+                <li><strong>Content Studio MVP:</strong> Upload PDFs/DOCX &rarr; AI generates WhatsApp conversations + quiz questions</li>
+                <li><strong>AI Buddy MVP:</strong> Guided conversations on WhatsApp with validation questions and progress tracking</li>
+                <li><strong>Basic Analytics:</strong> Per-learner progress, completion rates, quiz scores</li>
+                <li><strong>Admin Dashboard:</strong> Content upload, preview, deploy, monitor</li>
+                <li><strong>Pilot:</strong> 2-3 existing clients (BPO focus), 100-500 learners</li>
+            </ul>
+            <div class="callout callout-blue" style="margin-top: 12px;">
+                <div class="callout-icon">&#127919;</div>
+                <div><strong>Phase 1 Success Criteria:</strong> 3 paying clients, 80%+ completion rates, &lt;5 min content creation time, positive learner feedback (NPS 40+)</div>
+            </div>
+        </div>
+
+        <div class="phase-item">
+            <h4>Phase 2: Enrichment <span class="badge badge-orange">Months 5-8</span></h4>
+            <div class="phase-date">Multi-Format &amp; Intelligence</div>
+            <ul>
+                <li><strong>Podcast Generation:</strong> AI-generated personalized audio episodes from content</li>
+                <li><strong>Video Lessons:</strong> AI avatar presentations with embedded quiz validation</li>
+                <li><strong>Roleplay via Sam:</strong> Voice-based scenario practice using Sam AI engine</li>
+                <li><strong>Advanced Analytics:</strong> Risk alerts, cohort comparisons, content effectiveness reports</li>
+                <li><strong>Learning Path Builder:</strong> Visual path creation with prerequisites and branching</li>
+                <li><strong>Microlearning Cards:</strong> Swipeable TikTok-style daily reinforcement</li>
+                <li><strong>Multilingual Support:</strong> AI translation and localization for content + buddy</li>
+            </ul>
+        </div>
+
+        <div class="phase-item">
+            <h4>Phase 3: Scale <span class="badge badge-blue">Months 9-12</span></h4>
+            <div class="phase-date">Enterprise Features &amp; Compliance</div>
+            <ul>
+                <li><strong>Compliance Engine:</strong> Mandatory modules, audit trails, digital signatures, recertification</li>
+                <li><strong>Certification System:</strong> Digital badges, PDF certificates, LinkedIn sharing</li>
+                <li><strong>Pre-Built Templates:</strong> Industry-specific modules (BPO compliance, retail product training)</li>
+                <li><strong>ATS Integration:</strong> Auto-trigger training paths when candidates are hired in Talkpush/Workday/SAP</li>
+                <li><strong>Interactive Simulations:</strong> Full scenario-based training with branching outcomes</li>
+                <li><strong>ROI Calculator:</strong> Built-in tool to demonstrate training cost savings</li>
+                <li><strong>Social Learning:</strong> Cohort-based peer interactions facilitated by AI buddy</li>
+            </ul>
+        </div>
+
+        <div class="phase-item">
+            <h4>Phase 4: Platform <span class="badge badge-purple">Months 13-18</span></h4>
+            <div class="phase-date">Beyond Onboarding &mdash; Continuous Learning</div>
+            <ul>
+                <li><strong>Continuous Learning:</strong> Extend beyond onboarding to ongoing skill development and upskilling</li>
+                <li><strong>Manager Training Tools:</strong> Leadership modules, team performance insights</li>
+                <li><strong>Content Marketplace:</strong> Clients share and purchase training modules from each other</li>
+                <li><strong>Predictive Success:</strong> AI predicts new hire success probability based on training performance</li>
+                <li><strong>Custom Integrations:</strong> Open API for third-party content providers (LinkedIn Learning, Udemy Business)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 12: PRICING -->
+<div class="section" id="pricing">
+    <h2><span class="section-number">12</span> Pricing Strategy</h2>
+
+    <h3>Pricing Model: Per New Hire Trained</h3>
+    <p>Aligns cost with value delivered. Companies pay based on volume of new hires trained through TalkLearn, not per seat or per month.</p>
+
+    <table>
+        <thead>
+            <tr><th>Tier</th><th>Volume</th><th>Price per Hire</th><th>Includes</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="badge badge-green">Starter</span></td>
+                <td>Up to 100 hires/month</td>
+                <td>$25-35 per hire</td>
+                <td>Content Studio, AI Buddy (WhatsApp), Basic Analytics, 5 content uploads/month</td>
+            </tr>
+            <tr>
+                <td><span class="badge badge-blue">Professional</span></td>
+                <td>100-500 hires/month</td>
+                <td>$15-25 per hire</td>
+                <td>Everything in Starter + Podcasts, Video Lessons, Advanced Analytics, Learning Paths, Unlimited uploads</td>
+            </tr>
+            <tr>
+                <td><span class="badge badge-purple">Enterprise</span></td>
+                <td>500+ hires/month</td>
+                <td>$8-15 per hire</td>
+                <td>Everything in Professional + Voice Roleplay (Sam), Compliance Engine, Certifications, Simulations, Custom Integrations, Dedicated CSM</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Pricing Justification</h3>
+    <div class="callout callout-green">
+        <div class="callout-icon">&#128176;</div>
+        <div>
+            <strong>ROI Case:</strong> A BPO spending $6,500/trainee on 6-week classroom training could reduce this to $2,500-3,000 using TalkLearn (training in 2-3 weeks, no classroom costs, no trainer salaries for basic content). At $15/hire for 500 hires/month, TalkLearn costs $7,500/month &mdash; saving $1.75M annually while improving knowledge retention from 25% to 80%+.
+        </div>
+    </div>
+
+    <h3>Bundling Strategy</h3>
+    <ul>
+        <li><strong>Talkpush Full Suite Discount:</strong> 20% discount for clients using Attract + Conversational AI + Onboarding + TalkLearn</li>
+        <li><strong>Migration Incentive:</strong> First 3 months at Starter pricing for Enterprise volume to encourage adoption</li>
+        <li><strong>Template Library Add-On:</strong> Pre-built industry compliance modules available as add-on ($500-2,000/month)</li>
+    </ul>
+</div>
+
+<!-- SECTION 13: RISKS & MITIGATIONS -->
+<div class="section">
+    <h2><span class="section-number">13</span> Risks &amp; Mitigations</h2>
+
+    <table>
+        <thead>
+            <tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>AI content accuracy</strong> &mdash; Generated training content contains errors</td>
+                <td><span class="badge badge-orange">Medium</span></td>
+                <td><span class="badge badge-red">High</span></td>
+                <td>Mandatory human review before deployment; confidence scoring on AI outputs; audit trail for all published content</td>
+            </tr>
+            <tr>
+                <td><strong>Feature creep into full LMS</strong> &mdash; Scope expands beyond onboarding training</td>
+                <td><span class="badge badge-red">High</span></td>
+                <td><span class="badge badge-orange">Medium</span></td>
+                <td>Strict focus on "first 90 days" use case. Position as onboarding training, not corporate LMS. Say no to features outside this scope.</td>
+            </tr>
+            <tr>
+                <td><strong>WhatsApp policy changes</strong> &mdash; Meta restricts training content on WhatsApp Business</td>
+                <td><span class="badge badge-orange">Medium</span></td>
+                <td><span class="badge badge-red">High</span></td>
+                <td>Multi-channel architecture ensures content can shift to SMS, Messenger, or web. WhatsApp is primary but not sole channel.</td>
+            </tr>
+            <tr>
+                <td><strong>Client content quality</strong> &mdash; Uploaded documents are poorly structured or outdated</td>
+                <td><span class="badge badge-red">High</span></td>
+                <td><span class="badge badge-orange">Medium</span></td>
+                <td>AI pre-analysis with quality warnings; content improvement suggestions; template library as baseline</td>
+            </tr>
+            <tr>
+                <td><strong>Adoption resistance</strong> &mdash; HR teams prefer classroom training</td>
+                <td><span class="badge badge-orange">Medium</span></td>
+                <td><span class="badge badge-orange">Medium</span></td>
+                <td>Position as complement to classroom (hybrid), not replacement. Show ROI data. Start with pilot programs.</td>
+            </tr>
+            <tr>
+                <td><strong>Data privacy</strong> &mdash; Training content contains sensitive company information processed by AI</td>
+                <td><span class="badge badge-orange">Medium</span></td>
+                <td><span class="badge badge-red">High</span></td>
+                <td>SOC2 compliance, data processing agreements, content encryption, option for on-premise AI processing for enterprise</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION 14: NEXT STEPS -->
+<div class="section">
+    <h2><span class="section-number">14</span> Immediate Next Steps</h2>
+
+    <div class="cards-grid">
+        <div class="card" style="border-left: 4px solid var(--tp-green);">
+            <h4>Week 1-2: Customer Discovery</h4>
+            <p>Interview 5-10 existing BPO/retail clients about onboarding training pain points. Focus: Concentrix, TaskUs, Genpact, Walmart.</p>
+            <p><strong>Key questions:</strong> How do you train today? What's the biggest bottleneck? Would WhatsApp-based training work for your workforce?</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--tp-blue);">
+            <h4>Week 3-4: Technical Feasibility</h4>
+            <p>Assess: Can we extend Sam for training roleplay? What AI models for content transformation? WhatsApp Business API limits for training use case?</p>
+            <p><strong>Build:</strong> Proof-of-concept: Upload PDF &rarr; Generate WhatsApp conversation flow.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--tp-purple);">
+            <h4>Week 5-6: Design Partners</h4>
+            <p>Secure 2-3 design partners committed to co-development and pilot. Negotiate terms: free access during beta in exchange for feedback and case study rights.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--tp-orange);">
+            <h4>Week 7-8: MVP Scope Lock</h4>
+            <p>Based on discovery findings, lock Phase 1 scope. Create detailed engineering specification. Begin sprint planning for 12-week MVP build.</p>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background: var(--tp-navy); color: white; padding: 32px 40px; text-align: center; margin-top: 40px;">
+    <div style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Talk<span style="color: var(--tp-green);">Learn</span></div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.6);">
+        Talkpush Product Management &bull; Product Definition v1.0 &bull; February 2026
+    </div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 8px;">
+        "Automation with a human touch" &mdash; from recruitment to productive employee
+    </div>
+</div>
+
+</div><!-- end content -->
+</body>
+</html>
